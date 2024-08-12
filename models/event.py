@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The event object"""
+"""The Event class mappped to event table""
 
 from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
