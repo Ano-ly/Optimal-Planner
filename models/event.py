@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The Event class mappped to event table""
+"""The Event class mappped to event table"""
 
 from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
@@ -12,13 +12,14 @@ class Event(Base):
     __tablename__ = "event"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    category: Mapped[str] = mapped_column(String(40))
-    time_created: Mapped[str] = mapped_column(DateTime)
-    set_date: Mapped[str] = mapped_column(DateTime)
-    desc: Mapped[str] = mapped_column(String)
-    location: Mapped[str] = mapped_column(String)
+    category: Mapped[str] = mapped_column(String(40), nullable=False)
+    time_created: Mapped[str] = mapped_column(DateTime, nullable=False)
+    set_date: Mapped[str] = mapped_column(DateTime, nullable=True)
+    desc: Mapped[str] = mapped_column(String, nullable=True)
+    location: Mapped[str] = mapped_column(String, nullable=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"),
+        nullable=False)
     user: Mapped["User"] = relationship(back_populates="events")
 
     tasks: Mapped[List["Task"]] = relationship(
