@@ -9,10 +9,9 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     
-    id = Column(Integer, primary_key=True);
-    username = Column(String(200), unique=True, nullable=False);
-    password = Column(String(255), nullable=False);
-    email = Column(String(255), unique=True, nullable=False);
-    created_at = Column(DateTime, default=datetime.utcnow);
-    update_at = Column(DateTime, default=datetime.utcnow, onUpdate=datetime.utcnow);
-    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True);
+    username: Mapped[str] = mapped_column(String(200), unique=True, nullable=False);
+    password: Mapped[str] = mapped_column(String(255), nullable=False);
+    email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False);
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow);
+    update_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onUpdate=datetime.utcnow);
