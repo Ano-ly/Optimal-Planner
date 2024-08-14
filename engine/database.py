@@ -3,10 +3,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models.base import Base
-from models.invitee import Invitee
 from models.user import User
+from models.invitee import Invitee
 from models.event import Event
-from models.budget import budget
+from models.budget import Budget
+from models.budget_item import BudgetItem
 from models.task import Task
 
 engine = create_engine('sqlite:///optimal_planner_db.sqlite', echo=True)
