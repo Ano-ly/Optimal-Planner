@@ -2,14 +2,14 @@
 """ User class """
 from sqlalchemy import Integer, String, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, declarative_base
-from .base import Base
+from models.base import Base
 from datetime import datetime
 
 Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'
-    
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)

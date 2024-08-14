@@ -11,7 +11,7 @@ class Task(Base):
    __tablename__ = "task"
 
    id: Mapped[int] = mapped_column(primary_key=True)
-   name: Mapped[str] = mapped_column(String(200))
+   name: Mapped[str] = mapped_column(String)
    desc: Mapped[str] = mapped_column(String)
 
    event_id: Mapped[int] = mapped_column(ForeignKey("event.id"))

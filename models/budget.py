@@ -12,7 +12,7 @@ class Budget(Base):
     """Class Budget mapped to the budget table"""
     __tablename__ = "budget"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     total: Mapped[int] = mapped_column(nullable=False)
 
     budget_items: Mapped[List["BudgetItem"]] = relationship(
