@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """The Event class mappped to event table"""
 
+from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from typing import List
@@ -13,8 +14,8 @@ class Event(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     category: Mapped[str] = mapped_column(String(40), nullable=False)
-    time_created: Mapped[str] = mapped_column(DateTime, nullable=False)
-    set_date: Mapped[str] = mapped_column(DateTime, nullable=True)
+    time_created: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    set_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     desc: Mapped[str] = mapped_column(String, nullable=True)
     location: Mapped[str] = mapped_column(String, nullable=True)
 
