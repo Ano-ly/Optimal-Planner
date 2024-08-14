@@ -10,7 +10,7 @@ from models.base import Base
 class Event(Base):
     """Event class"""
 
-    __tablename__ = "event"
+    __tablename__ = "events"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     category: Mapped[str] = mapped_column(String(40), nullable=False)
@@ -19,8 +19,8 @@ class Event(Base):
     desc: Mapped[str] = mapped_column(String, nullable=True)
     location: Mapped[str] = mapped_column(String, nullable=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"),
-        nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"),
+        nullable=False, default=None)
     user: Mapped["User"] = relationship(back_populates="events")
 
     tasks: Mapped[List["Task"]] = relationship(
