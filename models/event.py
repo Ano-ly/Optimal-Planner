@@ -30,7 +30,10 @@ class Event(Base):
     invitees: Mapped[List["Invitee"]] = relationship(
         back_populates="event", cascade="all, delete-orphan")
     
-    def create_event(Session: Session, event_type: str, description: str = None):
+    def create_event(Session: Session, event_type: str,
+                     location: str,
+                     guest: int, 
+                     description: str = None):
         """ Creates a new event"""
         new_event = Event(category=event_type, time_created=datetime.now(),
                       desc=description, location="")
@@ -38,7 +41,38 @@ class Event(Base):
         Session.commit()
         return new_event
     
-    def update_event(Session: Session, event_type_id: int, description: str = None):
-        """ Updates an existing event"""
-        update_event = Session.query(Event).filter_by(id = event_type_id).first()
-        # if eve
+    def update_event(session: Session, event_id: int,
+                    event_type: str = None,
+                    location: str = None,
+                    guest: int = None,
+                    description: str = None) -> Event:
+        """Update an existing event."""
+        # Fetch the event by ID
+        event = session.query(Event).filter_by(id=event_id).first()
+        try:
+            if event:
+                # Update the event's type if provided
+                if event_type:
+                    event.category = event_type
+                
+                # Update the event's description if provided
+                if description:
+                    event.desc = description
+                
+                # Update the event's location if provided
+                if location:
+                    event.location = location
+                
+                # Update the number of Guest if provided
+                if guest:
+                    event.guest = guest
+                
+                # Commit the changes to the database
+                session.commit()
+                
+                return event
+        except Exception as e:
+            session.rollback()
+            return "An error occurred"
+        else:
+                return None
