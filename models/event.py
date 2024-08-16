@@ -29,3 +29,16 @@ class Event(Base):
         back_populates="event", cascade="all, delete-orphan")
     invitees: Mapped[List["Invitee"]] = relationship(
         back_populates="event", cascade="all, delete-orphan")
+    
+    def create_event(Session: Session, event_type: str, description: str = None):
+        """ Creates a new event"""
+        new_event = Event(category=event_type, time_created=datetime.now(),
+                      desc=description, location="")
+        Session.add(new_event)
+        Session.commit()
+        return new_event
+    
+    def update_event(Session: Session, event_type_id: int, description: str = None):
+        """ Updates an existing event"""
+        update_event = Session.query(Event).filter_by(id = event_type_id).first()
+        # if eve
