@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""Test file for create_user function"""
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -18,7 +21,7 @@ def test_db():
 def test_create_user(test_db):
     # Test creating a new user
     new_user = create_user(test_db, "testuser", "testpassword", "test@example.com")
-    
+
     # Verify the user was created
     assert new_user.username == "testuser"
     assert new_user.email == "test@example.com"
@@ -26,3 +29,5 @@ def test_create_user(test_db):
 
     # Verify that the password was hashed
     assert new_user.password != "testpassword"  # Password should be hashed, so it shouldn't match the plain password
+
+test_create_user(test_db())
