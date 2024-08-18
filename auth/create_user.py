@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-from sqlalchemy.orm import Session
-from models import user
-import bcrypt
 """ manage user authentication """
 
-# def authenticate_user(db: Session, username: str, password: str):
-#     """Check if a user exists and if their password matches"""
-#     user = db.query(user.User).filter(user.User.username == username).first()
-#     if user and user.password == password:
-#         return user
-#     return None
+import bcrypt
+from sqlalchemy.orm import Session
+from models import user
+
+"""
+ def authenticate_user(db: Session, username: str, password: str):
+     """Check if a user exists and if their password matches"""
+     user = db.query(user.User).filter(user.User.username == username).first()
+     if user and user.password == password:
+         return user
+     return None
+"""
 
 def create_user(db: Session, username: str, password: str, email: str):
     """Create a new user"""
@@ -22,4 +25,4 @@ def create_user(db: Session, username: str, password: str, email: str):
     except Exception as e:
         db.rollback()
         raise e
-    return new_user
+    return (new_user)

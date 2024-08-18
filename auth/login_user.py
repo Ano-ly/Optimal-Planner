@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """ login user"""
 
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models.user import User
+import bcrypt
 import getpass
 import re
-import bcrypt
+from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import create_engine
+from models.user import User
 
 def authenticate_user(db: Session, identify: str, password: str):
     """Check if a user exists and if their password matches"""
@@ -19,15 +18,17 @@ def authenticate_user(db: Session, identify: str, password: str):
         return user
     return None
 
+
 def is_valid(identify: str) -> bool:
      """Check if the identifier is a valid email address."""
      email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
      return re.match(email_pattern, identify) is not None
 
+
 def login_user(db: Session, identify: str, password: str):
     """ Logs user in with either Username or email """
     user = authenticate_user(db, identify, password)
-    
+
     try:
         if user:
             return "Login successful!"
