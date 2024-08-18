@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """ User class """
 
+import bcrypt
 from datetime import datetime
 from sqlalchemy import Integer, String, DateTime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 from models.base import Base
 from typing import List
 
@@ -19,3 +20,17 @@ class User(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     events: Mapped[List["Event"]] = relationship(back_populates="user")
+
+    @classmethod
+    def create_user(cls, db: Session, username: str, password: str, email: str):
+        """Create a new user"""
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        new_user = User(username=username, password=hashed_password, email=email)
+        try:
+            db.add(new_user)
+            db.commit()
+            db.refresh(new_user)
+        except Exception as e:
+            db.rollback()
+            raise e
+        return (new_user)
