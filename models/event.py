@@ -37,11 +37,11 @@ class Event(Base):
                      catg: str,
                      gst: int,
                      userid: str,
-                     _user: User,
                      loc: str = None,
                      date: datetime = None,
                      description: str = None) -> "Event":
         """ Creates a new event"""
+        _user = Session.query(User).filter_by(id=userid).one()
         new_event = Event(category=catg, guest=gst, user_id=userid,
                           user=_user, desc=description, location=loc,
                           set_date=date)
