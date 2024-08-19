@@ -4,6 +4,7 @@
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from models.base import Base
+from models.budget import Budget
 
 
 class BudgetItem(Base):
@@ -25,9 +26,9 @@ class BudgetItem(Base):
                     session: Session,
                     description: str,
                     _total: int,
-                    budg_id: str):
+                    budg_id: int):
         """Create budget item attached to budget"""
-        budg = session.query(Budget).filter_by(id=budg_id)
+        budg = session.query(Budget).filter_by(id=budg_id).one_or_none()
         if budg:
             try:
                 new_item = BudgetItem(desc=description,
@@ -35,29 +36,32 @@ class BudgetItem(Base):
                                       budget_id=budg_id,
                                       budget=budg)
                 session.add(new_item)
+                session.commit()
                 return (new_item)
             except Exception as e:
-                return ("An error occured: {}".format(e))
+                raise Exception(f"An error occurred: {e}")
         else:
-            return("An Error occured: Parent budget object does not exist")
+            raise Exception("Item not found")
 
-
+    @classmethod
     def update_item(cls,
-                    item_id: str,
                     session: Session,
+                    item_id: int,
                     description: str = None,
                     _total: int = None):
         """Update budget item information"""
-        item = session.query(BudgetItem).filter_by(id=item_id).one()
+        item = session.query(cls).filter_by(id=item_id).one_or_none()
         if item:
             try:
                 if description:
                     item.desc = description
                 if _total:
                     item.total = _total
+                session.add(item)
+                session.commit()
                 return (item)
             except Exception as e:
-                return ("An Error occured: {}".format(e))
+                raise Exception(f"An error occurred: {e}")
         else:
-            return ("An Error occured: BudgetItem object not found")
+            raise Exception("Item not found")
 
