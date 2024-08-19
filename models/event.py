@@ -77,12 +77,14 @@ class Event(Base):
                     event.guest = guest
                 # Update the date for event to hold if provided
                 if date:
-                    event.set_date = guest
+                    event.set_date = date
 
                 # Commit the changes to the database
                 session.commit()
 
                 return (event)
+            else:
+                return("An Error occured: Event object not found")
         except Exception as e:
             session.rollback()
             return ("An error occurred")
