@@ -42,7 +42,7 @@ class BudgetItem(Base):
             return("An Error occured: Parent budget object does not exist")
 
 
-    def update_item(cls
+    def update_item(cls,
                     item_id: str,
                     session: Session,
                     description: str = None,
