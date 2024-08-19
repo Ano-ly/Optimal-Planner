@@ -11,10 +11,9 @@ def login_gmail(email_id: str, email_id_password: str):
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(email_id, email_id_password)
-        return("Login successful")
         return server
     except Exception as e:
-        return(f"Failed to login: {e}")
+        raise Exception(f"Failed to login: {e}")
 
 def logout_gmail(server):
     try:
@@ -26,11 +25,10 @@ def logout_gmail(server):
 def send_mail(server, email_id: str):
     invitee_emails = session.query(Invitee.email).all()
     for dest in invitee_emails:
-        message = "message"
+        message = "Message."
         try:
             server.sendmail(email_id, dest.email, message)
-            return(f"Email sent to {dest.email}")
         except Exception as e:
-            return(f"Failed to send email to {dest.email}: {e}")
+            raise Exception(f"Failed to send email to {dest.email}: {e}")
 
     session.close()
