@@ -60,7 +60,7 @@ class Event(Base):
                      description: str = None) -> "Event":
         """Update an existing event."""
         # Fetch the event by ID
-        event = session.query(Event).filter_by(id=event_id).first()
+        event = session.query(Event).filter_by(id=event_id).one_or_none()
         try:
             if event:
                 # Update the event's type if provided
@@ -77,15 +77,17 @@ class Event(Base):
                     event.guest = guest
                 # Update the date for event to hold if provided
                 if date:
-                    event.set_date = guest
+                    event.set_date = date
 
                 # Commit the changes to the database
                 session.commit()
 
                 return (event)
+            else:
+                raise Exception("Item not found")
         except Exception as e:
             session.rollback()
-            return ("An error occurred")
+            raise Exception(f"An error occurre: {e}")
 
         #else:
         #        return None
