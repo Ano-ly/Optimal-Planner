@@ -39,6 +39,7 @@ class Budget(Base):
                 session.commit()
                 return (new_budget)
             except Exception as e:
+                session.rollback()
                 raise Exception(f"An error occurred: {e}")
         else:
             raise Exception("Item not found")
@@ -58,6 +59,7 @@ class Budget(Base):
                 session.commit()
                 return (budg)
             except Exception as e:
+                session.rollback()
                 raise Exception(f"An error occurred: {e}")
         else:
             raise Exception("Item not found")
