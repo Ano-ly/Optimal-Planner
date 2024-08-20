@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test create event function"""
+"""Test update_invite function"""
 
 from models.event import Event
 from models.invite import Invite
