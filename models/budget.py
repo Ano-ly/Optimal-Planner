@@ -27,7 +27,7 @@ class Budget(Base):
     def create_budget(cls,
                     session: Session,
                     _total: int,
-                    evnt_id: int):
+                    evnt_id: int) -> "Budget":
         """Create budget attached to event"""
         evnt = session.query(Event).filter_by(id=evnt_id).one_or_none()
         if evnt:
@@ -48,7 +48,7 @@ class Budget(Base):
     def update_budget(cls,
                     session: Session,
                     budg_id: int,
-                    _total: int = None):
+                    _total: int = None) -> "Budget":
         """Update budget information"""
         budg = session.query(cls).filter_by(id=budg_id).one_or_none()
         if budg:

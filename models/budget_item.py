@@ -26,7 +26,7 @@ class BudgetItem(Base):
                     session: Session,
                     description: str,
                     _total: int,
-                    budg_id: int):
+                    budg_id: int) -> "BudgetItem":
         """Create budget item attached to budget"""
         budg = session.query(Budget).filter_by(id=budg_id).one_or_none()
         if budg:
@@ -49,7 +49,7 @@ class BudgetItem(Base):
                     session: Session,
                     item_id: int,
                     description: str = None,
-                    _total: int = None):
+                    _total: int = None) -> "BudgetItem":
         """Update budget item information"""
         item = session.query(cls).filter_by(id=item_id).one_or_none()
         if item:

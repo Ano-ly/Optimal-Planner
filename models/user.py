@@ -22,15 +22,19 @@ class User(Base):
     events: Mapped[List["Event"]] = relationship(back_populates="user")
 
     @classmethod
-    def create_user(cls, db: Session, username: str, password: str, email: str):
+    def create_user(cls,
+                    session: Session,
+                    username: str,
+                    password: str,
+                    email: str) -> "User":
         """Create a new user"""
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         new_user = User(username=username, password=hashed_password, email=email)
         try:
-            db.add(new_user)
-            db.commit()
-            db.refresh(new_user)
+            session.add(new_user)
+            session.commit()
+            session.refresh(new_user)
         except Exception as e:
-            db.rollback()
+            session.rollback()
             raise e
         return (new_user)
