@@ -8,7 +8,7 @@ from models.event import Event
 from models.user import User
 
 
-#new_user = User.create_user(session, "Cam", "Amarachi", "cam@gmail.com")
+new_user = User.create_user(session, "Cam", "Amarachi", "cam@gmail.com")
 
 my_user = session.query(User).filter_by(username="Cam").first()
 

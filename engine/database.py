@@ -11,7 +11,7 @@ from models.budget import Budget
 from models.budget_item import BudgetItem
 from models.task import Task
 
-engine = create_engine('sqlite:///optimal_plannerdb.sqlite', echo=True)
+engine = create_engine('sqlite:///optimal_planner_db.sqlite', echo=True)
 
 Base.metadata.bind = engine
 
