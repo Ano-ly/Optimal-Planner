@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test create event function"""
+"""Test update budget function"""
 
 from models.budget import Budget
 from models.event import Event
