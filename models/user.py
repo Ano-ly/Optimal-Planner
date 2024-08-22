@@ -2,11 +2,11 @@
 """ User class """
 
 import bcrypt
+from typing import List
 from datetime import datetime
 from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 from models.base import Base
-from typing import List
 
 
 class User(Base):
@@ -38,18 +38,3 @@ class User(Base):
             session.rollback()
             raise e
         return (new_user)
-
-    @classmethod
-    def delete_obj(cls, session: Session, obj_id: int) -> None:
-        """Delete an object from the database"""
-
-        try:
-            obj = session.query(cls).filter_by(id=obj_id).one_or_none()
-            if not obj:
-                raise Exception("Item does not exist")
-            session.delete(obj)
-            session.commit()
-            return (None)
-        except Exception as e:
-            session.rollback()
-            raise Exception(f"An error occured: {e}")
