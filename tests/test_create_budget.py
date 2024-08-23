@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test create event function"""
+"""Test create budget function"""
 
 from models.budget import Budget
 from models.event import Event
@@ -12,9 +12,9 @@ new_user = User(username="Amiee",
                 email="myemal@emei.com")
 """
 
-new_user = User.create_user(session, "Amiee", "Amarachi", "Amie@gmail.com")
+new_user = User.create_user(session, "Amy", "Amarachi", "Amy@gmail.com")
 
-my_user = session.query(User).filter_by(username="Amiee").first()
+my_user = session.query(User).filter_by(username="Amy").first()
 
 new_event = Event.create_event(session, "Wedding", 56, my_user.id)
 print(new_event)

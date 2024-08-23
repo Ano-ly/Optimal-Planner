@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test create_item function for creating new budget items"""
+"""Test update_item function for updating budget items"""
 
 from engine.database import session
 from models.budget import Budget

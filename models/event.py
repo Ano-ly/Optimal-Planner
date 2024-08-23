@@ -29,11 +29,11 @@ class Event(Base):
         back_populates="event", cascade="all, delete-orphan")
     budget: Mapped["Budget"] = relationship(
         back_populates="event", cascade="all, delete-orphan")
-    invitees: Mapped[List["Invitee"]] = relationship(
+    invites: Mapped[List["Invite"]] = relationship(
         back_populates="event", cascade="all, delete-orphan")
 
     @classmethod
-    def create_event(cls, Session: Session,
+    def create_event(cls, session: Session,
                      catg: str,
                      gst: int,
                      userid: str,
@@ -41,13 +41,21 @@ class Event(Base):
                      date: datetime = None,
                      description: str = None) -> "Event":
         """ Creates a new event"""
-        _user = Session.query(User).filter_by(id=userid).one()
-        new_event = Event(category=catg, guest=gst, user_id=userid,
-                          user=_user, desc=description, location=loc,
-                          set_date=date)
-        Session.add(new_event)
-        Session.commit()
-        return (new_event)
+        _user = session.query(User).filter_by(id=userid).one()
+        if _user:
+            try:
+
+                new_event = Event(category=catg, guest=gst, user_id=userid,
+                                  user=_user, desc=description, location=loc,
+                                  set_date=date)
+                session.add(new_event)
+                session.commit()
+                return (new_event)
+            except Exception as e:
+                session.rollback()
+                raise Exception(f"An Error occured: {e}")
+        else:
+            raise Exception("User not found")
 
 
     @classmethod
@@ -61,8 +69,8 @@ class Event(Base):
         """Update an existing event."""
         # Fetch the event by ID
         event = session.query(Event).filter_by(id=event_id).one_or_none()
-        try:
-            if event:
+        if event:
+            try:
                 # Update the event's type if provided
                 if catg:
                     event.category = catg
@@ -83,11 +91,9 @@ class Event(Base):
                 session.commit()
 
                 return (event)
-            else:
-                raise Exception("Item not found")
-        except Exception as e:
-            session.rollback()
-            raise Exception(f"An error occurre: {e}")
+            except Exception as e:
+                session.rollback()
+                raise Exception(f"An error occurred: {e}")
+        else:
+            raise Exception("Item not found")
 
-        #else:
-        #        return None
