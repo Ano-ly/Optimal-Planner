@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """The Event class mappped to event table"""
 
+from copy import deepcopy
 from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
@@ -97,3 +98,15 @@ class Event(Base):
         else:
             raise Exception("Item not found")
 
+    @classmethod
+    def get_events(cls, session):
+        """Get all event items"""
+        try:
+            event_items = session.query(cls).all()
+        except Exception as e:
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_ev = [deepcopy(ev.__dict__) for ev in event_items]
+            for dic in dict_ev:
+                del(dic["_sa_instance_state"])
+            return (dict_ev)

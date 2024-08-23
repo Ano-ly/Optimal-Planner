@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """BudgetItem class"""
 
+from copy import deepcopy
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from models.base import Base
@@ -67,3 +68,15 @@ class BudgetItem(Base):
         else:
             raise Exception("Item not found")
 
+    @classmethod
+    def get_items(cls, session):
+        """Get all budget_items"""
+        try:
+            b_items = session.query(cls).all()
+        except Exception as e:
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_b = [deepcopy(b.__dict__) for b in b_items]
+            for dic in dict_b:
+                del(dic["_sa_instance_state"])
+            return (dict_b)

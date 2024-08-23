@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Task class for event tasks"""
 
+from copy import deepcopy
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from models.base import Base
@@ -61,3 +62,16 @@ class Task(Base):
                 raise Exception(f"An error occurred: {e}")
         else:
             raise Exception("Item not found")
+
+    @classmethod
+    def get_tasks(cls, session):
+        """Get all tasks"""
+        try:
+            tasks = session.query(cls).all()
+        except Exception as e:
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_tasks = [deepcopy(tsk.__dict__) for tsk in tasks]
+            for dic in dict_tasks:
+                del(dic["_sa_instance_state"])
+            return (dict_tasks)

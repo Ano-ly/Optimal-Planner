@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Invite class for event invites"""
 
+from copy import deepcopy
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from models.base import Base
@@ -67,3 +68,15 @@ class Invite(Base):
         else:
             raise Exception("Item not found")
 
+    @classmethod
+    def get_invites(cls, session):
+        """Get all invites"""
+        try:
+            invites = session.query(cls).all()
+        except Exception as e:
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_invs = [deepcopy(inv.__dict__) for inv in invites]
+            for dic in dict_invs:
+                del(dic["_sa_instance_state"])
+            return (dict_invs)
