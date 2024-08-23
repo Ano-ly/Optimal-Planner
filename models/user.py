@@ -2,6 +2,7 @@
 """ User class """
 
 import bcrypt
+import copy
 from typing import List
 from datetime import datetime
 from sqlalchemy import Integer, String, DateTime
@@ -38,3 +39,16 @@ class User(Base):
             session.rollback()
             raise e
         return (new_user)
+
+    @classmethod
+    def get_users(cls, session):
+        """Get all users"""
+        try:
+            users = session.query(cls).all()
+        except Exception as e:
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_users = [copy.deepcopy(user.__dict__) for user in users]
+            for dic in dict_users:
+                del(dic["_sa_instance_state"])
+            return (dict_users)
