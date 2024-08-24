@@ -12,8 +12,8 @@ def get_users():
     try:
         users = User.get_users(session)
     except Exception as e:
-        #abort(500)
-        return(jsonify(f"Error: {e}"))
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(users))
 
@@ -28,8 +28,8 @@ def get_user(usr_id):
         else:
             return (jsonify({}))
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/user/<int:usr_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -38,15 +38,20 @@ def delete_user(usr_id):
     try:
         User.delete_obj(session, usr_id)
     except Exception as e:
-        return(jsonify(f"Error: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return (jsonify({}))
 
 @app_views.route("/user", strict_slashes=False,
 methods=["POST"])
 def create_user():
-    """Create a new user"""
+    """
+    Create a new user
+
+    Required request parameters: username, password, email
+    Optional request parameters: Nil
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
@@ -62,15 +67,20 @@ def create_user():
     try:
         new_user = User.create_user(session, username, password, email)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_user.id))
 
 @app_views.route("/user/<int:usr_id>", strict_slashes=False,
 methods=["PUT"])
 def update_user(usr_id):
-    """Update a user based on id"""
+    """
+    Update a user based on id
+
+    Required request parameters: Nil
+    Optional request parameters: username, password, email
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
@@ -80,7 +90,7 @@ def update_user(usr_id):
     try:
         upd_user = User.update_user(session, usr_id, nm, eml, pswd)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_user.id))

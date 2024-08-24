@@ -12,14 +12,14 @@ def get_budget_item_by_budget(budg_id):
     try:
         items = [item for item in BudgetItem.get_items(session) if item["budget_id"]==budg_id]
     except Exception as e:
-        #abort(500)
-        return(jsonify(f"Error: {e}"))
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
     else:
         return(jsonify(items))
 
 @app_views.route("/budget_item/<int:b_id>", strict_slashes=False, methods=["GET"])
 def get_budget_item(b_id):
-    """Get all budget_items"""
+    """Get a particular budget_item"""
     try:
         budget_items = BudgetItem.get_items(session)
         for budget_item in budget_items:
@@ -28,8 +28,8 @@ def get_budget_item(b_id):
         else:
             return (jsonify({}))
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/budget_item/<int:b_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -38,48 +38,59 @@ def delete_budget_item(b_id):
     try:
         BudgetItem.delete_obj(session, b_id)
     except Exception as e:
-        return(jsonify(f"Error: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
 @app_views.route("/budget_item", strict_slashes=False,
 methods=["POST"])
 def create_budget_item():
-    """Create a new budget_item"""
+    """
+    Create a new budget_item
+
+    Required request parameters: budg_id, total, desc
+    Optional request parameters: Nil
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
     if "budg_id" not in req:
-        abort(400, description="Event id(budg_id) not included")
-    if "_total" not in req:
-        abort(400, description="Total(_total) not included")
-    if "description" not in req:
-        abort(400, description="Description not included")
+        abort(400, description="Budget id(budg_id) not included")
+    if "total" not in req:
+        abort(400, description="Total(total) not included")
+    if "desc" not in req:
+        abort(400, description="Description(desc) not included")
     budg_id = req.get("budg_id")
-    _total = req.get("_total")
-    description = req.get("description")
+    _total = req.get("total")
+    description = req.get("desc")
     try:
         new_budget_item = BudgetItem.create_item(session, description, _total, budg_id)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_budget_item.id))
 
 @app_views.route("/budget_item/<int:b_id>", strict_slashes=False,
 methods=["PUT"])
 def update_budget_item(b_id):
-    """Update a budget item based on id"""
+    """
+    Update a budget item based on id
+
+    Required request parameters: Nil
+    Optional request parameters: desc, total
+
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
     desc = req.get("desc")
-    _total = req.get("_total")
+    _total = req.get("total")
     try:
         upd_item = BudgetItem.update_item(session, b_id, desc, _total)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_item.id))

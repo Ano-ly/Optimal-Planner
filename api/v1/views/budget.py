@@ -8,7 +8,7 @@ from engine.database import session
 
 @app_views.route("/budget/event/<int:evnt_id>", strict_slashes=False, methods=["GET"])
 def get_budget_by_event(evnt_id):
-    """Get all budgets in a certain event"""
+    """Get all budgets under a certain event"""
     try:
         for budg in Budget.get_budgets(session):
             if budg["event_id"] == evnt_id:
@@ -16,12 +16,12 @@ def get_budget_by_event(evnt_id):
         else:
             return(jsonify({}))
     except Exception as e:
-        #abort(500)
-        return(jsonify(f"Error: {e}"))
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
 
 @app_views.route("/budget/<int:budg_id>", strict_slashes=False, methods=["GET"])
 def get_budget(budg_id):
-    """Get all budgets"""
+    """Get a budget by id"""
     try:
         budgets = Budget.get_budgets(session)
         for budget in budgets:
@@ -30,8 +30,8 @@ def get_budget(budg_id):
         else:
             return (jsonify({}))
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/budget/<int:budg_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -40,36 +40,46 @@ def delete_budget(budg_id):
     try:
         Budget.delete_obj(session, budg_id)
     except Exception as e:
-        return(jsonify(f"Error: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
 @app_views.route("/budget", strict_slashes=False,
 methods=["POST"])
 def create_budget():
-    """Create a new budget"""
+    """
+    Create a new budget
+
+    Required request parameters: event_id, total
+    Optional request parameters: Nil
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
-    if "evnt_id" not in req:
-        abort(400, description="Event id(evnt_id) not included")
-    if "_total" not in req:
-        abort(400, description="Total(_total) not included")
-    evnt_id = req.get("evnt_id")
-    _total = req.get("_total")
+    if "event_id" not in req:
+        abort(400, description="Event id(event_id) not included")
+    if "total" not in req:
+        abort(400, description="Total(total) not included")
+    evnt_id = req.get("event_id")
+    total = req.get("total")
     try:
-        new_budget = Budget.create_budget(session, _total,evnt_id)
+        new_budget = Budget.create_budget(session, total,evnt_id)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_budget.id))
 
 @app_views.route("/budget/<int:budg_id>", strict_slashes=False,
 methods=["PUT"])
 def update_budget(budg_id):
-    """Update a budget based on id"""
+    """
+    Update a budget based on id
+
+    Required request parameters: Nil
+    Optional request parameters: total
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
@@ -77,7 +87,7 @@ def update_budget(budg_id):
     try:
         upd_budget = Budget.update_budget(session, budg_id, _total)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_budget.id))

@@ -13,14 +13,14 @@ def get_invite_by_event(evnt_id):
         invites = [inv for inv in Invite.get_invites(session) if inv["event_id"]
 == evnt_id]
     except Exception as e:
-        #abort(500)
-        return(jsonify(f"Error: {e}"))
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
     else:
         return(jsonify(invites))
 
 @app_views.route("/invite/<int:inv_id>", strict_slashes=False, methods=["GET"])
 def get_invite(inv_id):
-    """Get all invites"""
+    """Get invite by id"""
     try:
         invites = Invite.get_invites(session)
         for invite in invites:
@@ -29,8 +29,8 @@ def get_invite(inv_id):
         else:
             return (jsonify({}))
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/invite/<int:inv_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -39,48 +39,58 @@ def delete_invite(inv_id):
     try:
         Invite.delete_obj(session, inv_id)
     except Exception as e:
-        return(jsonify(f"Error: {e}"))
-        #abort(404)
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
 @app_views.route("/invite", strict_slashes=False,
 methods=["POST"])
 def create_invite():
-    """Create a new invite"""
+    """
+    Create a new invite
+
+    Required request parameters: event_id, name
+    Optional request parameters: email, phone_no
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
-    if "evnt_id" not in req:
-        abort(400, description="Event id(evnt_id) not included")
-    if "nm" not in req:
+    if "event_id" not in req:
+        abort(400, description="Event id(event_id) not included")
+    if "name" not in req:
         abort(400, description="Name not included")
-    nm = req.get("nm")
-    evnt_id = req.get("evnt_id")
-    eml = req.get("eml")
-    ph_no = req.get("ph_no")
+    nm = req.get("name")
+    evnt_id = req.get("event_id")
+    eml = req.get("email")
+    ph_no = req.get("phone_no")
     try:
         new_invite = Invite.create_invite(session, evnt_id, nm, eml, ph_no)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_invite.id))
 
 @app_views.route("/invite/<int:inv_id>", strict_slashes=False,
 methods=["PUT"])
 def update_invite(inv_id):
-    """Update an invite based on id"""
+    """
+    Update an invite based on id
+
+    Required request parameters: Nil
+    Optional request parameters: name, email, phone_no
+    """
     if not request.get_json():
         abort(400, description="Not a valid JSON")
     req = request.get_json()
-    nm = req.get("nm")
-    eml = req.get("eml")
-    ph_no = req.get("ph_no")
+    nm = req.get("name")
+    eml = req.get("email")
+    ph_no = req.get("phone_no")
     try:
         upd_invite = Invite.update_invite(session, inv_id, nm, eml, ph_no)
     except Exception as e:
-        return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
+        abort(404, description=f"{e}")
+        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_invite.id))
