@@ -31,6 +31,8 @@ class Budget(Base):
                     evnt_id: int) -> "Budget":
         """Create budget attached to event"""
         evnt = session.query(Event).filter_by(id=evnt_id).one_or_none()
+        if evnt.budget is not None:
+            raise Exception("Budget already exists")
         if evnt:
             try:
                 new_budget = Budget(total=_total,

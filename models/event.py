@@ -62,8 +62,8 @@ class Event(Base):
     @classmethod
     def update_event(self, session: Session,
                      event_id: int,
-                     catg: str,
-                     guest: int,
+                     catg: str = None,
+                     guest: int = None,
                      loc: str = None,
                      date: datetime = None,
                      description: str = None) -> "Event":

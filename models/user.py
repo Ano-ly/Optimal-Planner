@@ -41,6 +41,33 @@ class User(Base):
         return (new_user)
 
     @classmethod
+    def update_user(cls,
+                      session: Session,
+                      user_id: int,
+                      usr_nm: str = None,
+                      eml: str = None,
+                      pswd: str = None) -> "User":
+        """Update user information"""
+        usr = session.query(cls).filter_by(id=user_id).one_or_none()
+        if usr:
+            try:
+                if eml:
+                    usr.email = eml
+                if usr_nm:
+                    usr.username = usr_nm
+                if pswd:
+                    hashed_password = bcrypt.hashpw(pswd.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                    usr.password = hashed_password
+                session.add(usr)
+                session.commit()
+                return (usr)
+            except Exception as e:
+                session.rollback()
+                raise Exception(f"An error occurred: {e}")
+        else:
+            raise Exception("User not found")
+
+    @classmethod
     def get_users(cls, session):
         """Get all users"""
         try:
