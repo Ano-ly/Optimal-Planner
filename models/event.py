@@ -5,6 +5,7 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from typing import List
+import uuid
 from models.base import Base
 from models.user import User
 
@@ -89,6 +90,8 @@ class Event(Base):
         except Exception as e:
             session.rollback()
             raise Exception(f"An error occurre: {e}")
-
-        #else:
-        #        return None
+    
+    def generate_event_link(event):
+        """Generate a unique event link for the event."""
+        unique_id = uuid.uuid4().hex
+        return f"https://optimalplanner.com/events/{unique_id}"
