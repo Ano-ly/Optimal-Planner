@@ -20,6 +20,7 @@ class Event(Base):
     desc: Mapped[str] = mapped_column(String, nullable=True)
     location: Mapped[str] = mapped_column(String, nullable=True)
     guest: Mapped[int] = mapped_column(Integer, nullable=False)
+    event_link: Mapped[str] = mapped_column(String(240), unique=True, nullable=True)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"),
         nullable=False, default=None)
