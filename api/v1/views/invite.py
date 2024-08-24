@@ -14,7 +14,6 @@ def get_invite_by_event(evnt_id):
 == evnt_id]
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return(jsonify(invites))
 
@@ -30,7 +29,6 @@ def get_invite(inv_id):
             return (jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/invite/<int:inv_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -40,7 +38,6 @@ def delete_invite(inv_id):
         Invite.delete_obj(session, inv_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
@@ -68,7 +65,6 @@ def create_invite():
         new_invite = Invite.create_invite(session, evnt_id, nm, eml, ph_no)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_invite.id))
 
@@ -91,6 +87,5 @@ def update_invite(inv_id):
         upd_invite = Invite.update_invite(session, inv_id, nm, eml, ph_no)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_invite.id))

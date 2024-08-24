@@ -14,7 +14,6 @@ def get_task_by_event(evnt_id):
         tasks = [tsk for tsk in Task.get_tasks(session) if tsk["event_id"]==evnt_id]
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return (jsonify(tasks))
 
@@ -30,7 +29,6 @@ def get_task(tsk_id):
             return (jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/task/<int:tsk_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -40,7 +38,6 @@ def delete_task(tsk_id):
         Task.delete_obj(session, tsk_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return (jsonify({}))
 
@@ -67,7 +64,6 @@ def create_task():
         new_task = Task.create_task(session, evnt_id, nm, desc)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_task.id))
 
@@ -89,6 +85,5 @@ def update_task(tsk_id):
         upd_task = Task.update_task(session, tsk_id, nm, dsc)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_task.id))

@@ -21,12 +21,22 @@ def close_db(error):
 @app.errorhandler(404)
 def handle_error(error):
     """Handle not-found error"""
-    return (jsonify({"error": "Not Found"}), 404)
+    return (jsonify({"error": f"{error}"}), 404)
+
+@app.errorhandler(403)
+def handle_error(error):
+    """Handle 403 error"""
+    return (jsonify({"error": "Forbidden"}), 403)
+
+@app.errorhandler(400)
+def handle_error(error):
+    """Handle 400 error"""
+    return (jsonify({"error": f"{error}"}), 403)
 
 @app.errorhandler(500)
 def handle_server_error(error):
     """Handle server error"""
-    return (jsonify({"error": "Server Error"}), 404)
+    return (jsonify({"error": f"{error}"}), 500)
 
 if __name__ == "__main__":
     app.run(port="5000", host="0.0.0.0")

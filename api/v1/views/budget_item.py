@@ -13,7 +13,6 @@ def get_budget_item_by_budget(budg_id):
         items = [item for item in BudgetItem.get_items(session) if item["budget_id"]==budg_id]
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return(jsonify(items))
 
@@ -29,7 +28,6 @@ def get_budget_item(b_id):
             return (jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/budget_item/<int:b_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -39,7 +37,6 @@ def delete_budget_item(b_id):
         BudgetItem.delete_obj(session, b_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
@@ -68,7 +65,6 @@ def create_budget_item():
         new_budget_item = BudgetItem.create_item(session, description, _total, budg_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_budget_item.id))
 
@@ -91,6 +87,5 @@ def update_budget_item(b_id):
         upd_item = BudgetItem.update_item(session, b_id, desc, _total)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_item.id))

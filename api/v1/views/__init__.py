@@ -11,3 +11,4 @@ from api.v1.views.event import *
 from api.v1.views.invite import *
 from api.v1.views.task import *
 from api.v1.views.user import *
+from api.v1.views.auth import *

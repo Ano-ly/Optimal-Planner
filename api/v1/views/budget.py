@@ -17,7 +17,6 @@ def get_budget_by_event(evnt_id):
             return(jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
 
 @app_views.route("/budget/<int:budg_id>", strict_slashes=False, methods=["GET"])
 def get_budget(budg_id):
@@ -31,7 +30,6 @@ def get_budget(budg_id):
             return (jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
 
 @app_views.route("/budget/<int:budg_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -41,7 +39,6 @@ def delete_budget(budg_id):
         Budget.delete_obj(session, budg_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify({}))
 
@@ -67,7 +64,6 @@ def create_budget():
         new_budget = Budget.create_budget(session, total,evnt_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_budget.id))
 
@@ -88,6 +84,5 @@ def update_budget(budg_id):
         upd_budget = Budget.update_budget(session, budg_id, _total)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(upd_budget.id))

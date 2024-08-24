@@ -11,9 +11,9 @@ from models.user import User
 def authenticate_user(db: Session, identify: str, password: str):
     """Check if a user exists and if their password matches"""
     if is_valid(identify):
-        user = db.query(User).filter(User.username == identify).first()
-    else:
         user = db.query(User).filter(User.email == identify).first()
+    else:
+        user = db.query(User).filter(User.username == identify).first()
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
         return user
     return None

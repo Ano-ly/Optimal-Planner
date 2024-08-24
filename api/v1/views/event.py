@@ -15,7 +15,6 @@ def get_event_by_user(usr_id):
         events = [ev for ev in Event.get_events(session) if ev["user_id"]==usr_id]
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
     else:
         return (jsonify(events))
 
@@ -31,7 +30,6 @@ def get_event(evt_id):
             return (jsonify({}))
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Error: {e}"))
 
 @app_views.route("/event/<int:evt_id>", strict_slashes=False,
 methods=["DELETE"])
@@ -41,7 +39,6 @@ def delete_event(evt_id):
         Event.delete_obj(session, evt_id)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return (jsonify({}))
 
@@ -74,7 +71,6 @@ def create_event():
         new_event = Event.create_event(session, catg, gst, userid, loc, date, description)
     except Exception as e:
         abort(404, description=f"{e}")
-        #return(jsonify(f"Ev: {e}"))
     else:
         return(jsonify(new_event.id))
 
@@ -100,6 +96,5 @@ def update_event(evnt_id):
         upd_event = Event.update_event(session, evnt_id, catg, gst, loc, date, description)
     except Exception as e:
         return(jsonify(f"Ev: {e}"))
-        #abort(404, description=f"{e}")
     else:
         return(jsonify(upd_event.id))
