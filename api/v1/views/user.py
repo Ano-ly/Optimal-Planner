@@ -67,5 +67,20 @@ def create_user():
     else:
         return(jsonify(new_user.id))
 
-if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0")
+@app_views.route("/user/<int:usr_id>", strict_slashes=False,
+methods=["PUT"])
+def update_user(usr_id):
+    """Update a user based on id"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    nm = req.get("username")
+    eml = req.get("email")
+    pswd = req.get("password")
+    try:
+        upd_user = User.update_user(session, usr_id, nm, eml, pswd)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(upd_user.id))

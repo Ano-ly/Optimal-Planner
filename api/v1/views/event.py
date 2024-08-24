@@ -72,7 +72,22 @@ def create_event():
         return(jsonify(new_event.id))
 
 
-
-
-if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0")
+@app_views.route("/event/<int:evnt_id>", strict_slashes=False,
+methods=["PUT"])
+def update_event(evnt_id):
+    """Update an event based on id"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    catg = req.get("catg")
+    gst = req.get("gst")
+    loc = req.get("loc")
+    date = req.get("date")
+    description = req.get("description")
+    try:
+        upd_event = Event.update_event(session, evnt_id, catg, gst, loc, date, description)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(upd_event.id))

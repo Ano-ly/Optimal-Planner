@@ -67,5 +67,20 @@ def create_invite():
     else:
         return(jsonify(new_invite.id))
 
-if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0")
+@app_views.route("/invite/<int:inv_id>", strict_slashes=False,
+methods=["PUT"])
+def update_invite(inv_id):
+    """Update an invite based on id"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    nm = req.get("nm")
+    eml = req.get("eml")
+    ph_no = req.get("ph_no")
+    try:
+        upd_invite = Invite.update_invite(session, inv_id, nm, eml, ph_no)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(upd_invite.id))

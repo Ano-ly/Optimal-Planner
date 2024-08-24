@@ -66,8 +66,23 @@ def create_task():
     else:
         return(jsonify(new_task.id))
 
-if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0")
+@app_views.route("/task/<int:tsk_id>", strict_slashes=False,
+methods=["PUT"])
+def update_task(tsk_id):
+    """Update a task based on id"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    nm = req.get("nm")
+    dsc = req.get("desc")
+    try:
+        upd_task = Task.update_task(session, tsk_id, nm, dsc)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(upd_task.id))
+
 
 if __name__ == "__main__":
     app.run(port="5000", host="0.0.0.0")

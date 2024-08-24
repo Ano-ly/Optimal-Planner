@@ -67,5 +67,19 @@ def create_budget_item():
     else:
         return(jsonify(new_budget_item.id))
 
-if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0")
+@app_views.route("/budget_item/<int:b_id>", strict_slashes=False,
+methods=["PUT"])
+def update_budget_item(b_id):
+    """Update a budget item based on id"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    desc = req.get("desc")
+    _total = req.get("_total")
+    try:
+        upd_item = BudgetItem.update_item(session, b_id, desc, _total)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(upd_item.id))
