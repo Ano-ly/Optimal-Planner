@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""BudgetItem views"""
+
+from flask import abort, jsonify, request
+from api.v1.views import app_views
+from models.budget_item import BudgetItem
+from engine.database import session
+
+@app_views.route("/budget_item/budget/<int:budg_id>", strict_slashes=False, methods=["GET"])
+def get_budget_item_by_budget(budg_id):
+    """Get all budget_items in a certain budget"""
+    try:
+        items = [item for item in BudgetItem.get_items(session) if item["budget_id"]==budg_id]
+    except Exception as e:
+        #abort(500)
+        return(jsonify(f"Error: {e}"))
+    else:
+        return(jsonify(items))
+
+@app_views.route("/budget_item/<int:b_id>", strict_slashes=False, methods=["GET"])
+def get_budget_item(b_id):
+    """Get all budget_items"""
+    try:
+        budget_items = BudgetItem.get_items(session)
+        for budget_item in budget_items:
+            if budget_item["id"] == b_id:
+                return (jsonify(budget_item))
+        else:
+            return (jsonify({}))
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404)
+
+@app_views.route("/budget_item/<int:b_id>", strict_slashes=False,
+methods=["DELETE"])
+def delete_budget_item(b_id):
+    """Delete a budget_item by id"""
+    try:
+        BudgetItem.delete_obj(session, b_id)
+    except Exception as e:
+        return(jsonify(f"Error: {e}"))
+        #abort(404)
+    else:
+        return (jsonify({}))
+
+@app_views.route("/budget_item", strict_slashes=False,
+methods=["POST"])
+def create_budget_item():
+    """Create a new budget_item"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    if "budg_id" not in req:
+        abort(400, description="Event id(budg_id) not included")
+    if "_total" not in req:
+        abort(400, description="Total(_total) not included")
+    if "description" not in req:
+        abort(400, description="Description not included")
+    budg_id = req.get("budg_id")
+    _total = req.get("_total")
+    description = req.get("description")
+    try:
+        new_budget_item = BudgetItem.create_item(session, description, _total, budg_id)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(new_budget_item.id))
+
+if __name__ == "__main__":
+    app.run(port="5000", host="0.0.0.0")

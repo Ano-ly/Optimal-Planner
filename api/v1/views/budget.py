@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Budget views"""
 
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models.budget import Budget
 from engine.database import session
@@ -44,6 +44,27 @@ def delete_budget(budg_id):
         #abort(404)
     else:
         return (jsonify({}))
+
+@app_views.route("/budget", strict_slashes=False,
+methods=["POST"])
+def create_budget():
+    """Create a new budget"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    if "evnt_id" not in req:
+        abort(400, description="Event id(evnt_id) not included")
+    if "_total" not in req:
+        abort(400, description="Total(_total) not included")
+    evnt_id = req.get("evnt_id")
+    _total = req.get("_total")
+    try:
+        new_budget = Budget.create_budget(session, _total,evnt_id)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(new_budget.id))
 
 if __name__ == "__main__":
     app.run(port="5000", host="0.0.0.0")

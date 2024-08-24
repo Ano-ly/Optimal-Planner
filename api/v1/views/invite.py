@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Invite views"""
 
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models.invite import Invite
 from engine.database import session
@@ -43,6 +43,29 @@ def delete_invite(inv_id):
         #abort(404)
     else:
         return (jsonify({}))
+
+@app_views.route("/invite", strict_slashes=False,
+methods=["POST"])
+def create_invite():
+    """Create a new invite"""
+    if not request.get_json():
+        abort(400, description="Not a valid JSON")
+    req = request.get_json()
+    if "evnt_id" not in req:
+        abort(400, description="Event id(evnt_id) not included")
+    if "nm" not in req:
+        abort(400, description="Name not included")
+    nm = req.get("nm")
+    evnt_id = req.get("evnt_id")
+    eml = req.get("eml")
+    ph_no = req.get("ph_no")
+    try:
+        new_invite = Invite.create_invite(session, evnt_id, nm, eml, ph_no)
+    except Exception as e:
+        return(jsonify(f"Ev: {e}"))
+        #abort(404, description=f"{e}")
+    else:
+        return(jsonify(new_invite.id))
 
 if __name__ == "__main__":
     app.run(port="5000", host="0.0.0.0")
