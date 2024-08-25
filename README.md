@@ -1,19 +1,22 @@
 
 ---
 
-# **Optimal-Planner**
+# Optimal Planner
 
-Optimal-Planner is a robust event management application designed to streamline event planning and organization. This application allows users to create events, allocate budgets, send notifications, and generate shareable event links for guest registration. With a focus on flexibility and ease of use, Optimal-Planner is the perfect tool for managing events of any size.
+## Overview
+
+Optimal Planner is an event-planning and organization web application that allows for easy event planning and management. With Optimal Planner, an organizer can effectively plan an event, allocate a budget, assign tasks, and send invites to attendees.
 
 ## Features
 
-- **User Authentication**: Secure authentication using passwords, with email confirmation for users and invitees.
-- **Event Creation and Management**: Create events, set dates, locations, and descriptions, and manage guest lists.
-- **Email Notifications**: Automated email notifications for event confirmation, reminders, and updates.
+- **Event Creation**: Create events of various categories like wedding, naming ceremony, burial, birthday ceremony, dinner, party, homecoming, etc.
+- **Invitation to Attendees**: Send invitations directly to the attendees' Gmail accounts through the application.
+- **Task Management**: Add tasks for each event for ease of coordination and execution of event-related activities.
 - **Event Link Generation**: Generate unique links for events that can be shared with potential guests for easy registration.
-- **Task Management**: Manage tasks related to events.
 - **Budget Allocation**: Allocate and track budgets for each event.
 - **Invitee Management**: Send invitations and track RSVPs.
+- **Email Notifications**: Automated email notifications for event confirmation, reminders, and updates.
+- **User Authentication**: Secure authentication using passwords, with email confirmation for users and invitees.
 
 ## Technologies Used
 
@@ -25,7 +28,7 @@ Optimal-Planner is a robust event management application designed to streamline 
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository to your system:
    ```bash
    git clone https://github.com/your-username/optimal-planner.git
    ```
@@ -33,13 +36,13 @@ Optimal-Planner is a robust event management application designed to streamline 
    ```bash
    cd optimal-planner
    ```
-3. Install the required dependencies:
+3. Install the necessary dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 4. Set up the database:
    ```bash
-   python database.py db upgrade
+   python manage.py db upgrade
    ```
 5. Run the application:
    ```bash
@@ -48,30 +51,56 @@ Optimal-Planner is a robust event management application designed to streamline 
 
 ## Usage
 
-1. **Create an Account**: Sign up and confirm your email address.
-2. **Create an Event**: Add event details, including the date, location, and description.
-3. **Manage Tasks and Budgets**: Organize tasks and allocate budgets for your event.
+1. **Log In**: Input your name/email and password on the user login page to log in.
+2. **Create an Event**: Enter the category, time set for the event, necessary budget, and other required information.
+3. **Share Invitations**: Send invitations to invitees via their Gmail accounts.
 4. **Generate Event Link**: Share the generated link with potential guests for registration.
-5. **Track RSVPs**: Monitor guest responses and attendance.
+5. **Manage Tasks and Budgets**: Organize tasks and allocate budgets for your event.
+6. **Track RSVPs**: Monitor guest responses and attendance.
 
-## Project Structure
+## Authors
 
-- `models/`: Contains the database models for users, events, tasks, and invitees.
-- `controllers/`: Manages the logic for user authentication, event creation, and more.
-- `utils/`: Helper functions for sending emails, generating tokens, etc.
-- `templates/`: HTML templates for rendering the user interface.
-- `static/`: Contains static assets like CSS files.
+- **Fortune Peter**
+  - Software Engineer; Mechanical Engineering Student, Ken Saro-wiwa Polytechnic, Delta State, Nigeria
+
+- **Amarachi Uvere**
+  - Software Engineer; Civil Engineering Student, Obafemi Awolowo University, Ile-Ife, Osun State, Nigeria
+
+- **Scholastica Amarachi**
+
+- **Bukola**
 
 ## Contributing
 
-Contributions are welcome! Please create a pull request or open an issue to suggest changes.
+Contributions are welcome! If you'd like to contribute to Optimal Planner, please follow these steps:
+
+1. Fork the repository.
+2. Create your feature branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes with descriptive commit messages:
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open a pull request.
+
+## Future Features
+
+- Event recommendations
+- More detailed events
+- Weather forecasting
+
+## Notes
+
+See notes below.
 
 ## License
 
 This project is licensed under the MIT License.
-
-## Acknowledgments
-
-Special thanks to all contributors and open-source libraries that made this project possible.
 
 ---
