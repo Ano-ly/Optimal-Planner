@@ -67,7 +67,7 @@ Optimal Planner is an event-planning web application and organization that allow
   - Software Engineer; Civil Engineering Student, Obafemi Awolowo University, Ile-Ife, Osun State, Nigeria
 
 - **Scholastica Amarachi**
-- ** Software Engineer; Frontend specialization, and a graduate Networking & System Security from Mario Institue, Uhunowere, Nsukka, Enugu state, Nigeria
+- ** Software Engineer; Frontend specialization, and an ND holder in Networking & System Security from Mario Institue, Uhunowere, Nsukka, Enugu state, Nigeria
 
 - **Bukola**
 - ** Software Engineer; Frontend specialization
