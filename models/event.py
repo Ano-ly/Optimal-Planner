@@ -6,6 +6,7 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from typing import List
+import uuid
 from models.base import Base
 from models.user import User
 

@@ -19,6 +19,8 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    confirmed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    confirmed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
