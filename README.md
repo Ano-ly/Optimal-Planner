@@ -5,7 +5,7 @@
 
 ## Overview
 
-Optimal Planner is an event-planning and organization web application that allows for easy event planning and management. With Optimal Planner, an organizer can effectively plan an event, allocate a budget, assign tasks, and send invites to attendees.
+Optimal Planner is an event-planning web application and organization that allows for easy event planning and management. With Optimal Planner, an organizer can effectively plan an event, allocate a budget, assign tasks, and send invites to attendees.
 
 ## Features
 
@@ -67,8 +67,10 @@ Optimal Planner is an event-planning and organization web application that allow
   - Software Engineer; Civil Engineering Student, Obafemi Awolowo University, Ile-Ife, Osun State, Nigeria
 
 - **Scholastica Amarachi**
+- ** Software Engineer; Frontend specialization, and a graduate Networking & System Security from Mario Institue, Uhunowere, Nsukka, Enugu state, Nigeria
 
 - **Bukola**
+- ** Software Engineer; Frontend specialization
 
 ## Contributing
 
