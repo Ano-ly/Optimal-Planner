@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """The Event class mappped to event table"""
 
+from copy import deepcopy
 from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
@@ -31,11 +32,11 @@ class Event(Base):
         back_populates="event", cascade="all, delete-orphan")
     budget: Mapped["Budget"] = relationship(
         back_populates="event", cascade="all, delete-orphan")
-    invitees: Mapped[List["Invitee"]] = relationship(
+    invites: Mapped[List["Invite"]] = relationship(
         back_populates="event", cascade="all, delete-orphan")
 
     @classmethod
-    def create_event(cls, Session: Session,
+    def create_event(cls, session: Session,
                      catg: str,
                      gst: int,
                      userid: str,
@@ -43,28 +44,36 @@ class Event(Base):
                      date: datetime = None,
                      description: str = None) -> "Event":
         """ Creates a new event"""
-        _user = Session.query(User).filter_by(id=userid).one()
-        new_event = Event(category=catg, guest=gst, user_id=userid,
-                          user=_user, desc=description, location=loc,
-                          set_date=date)
-        Session.add(new_event)
-        Session.commit()
-        return (new_event)
+        _user = session.query(User).filter_by(id=userid).one()
+        if _user:
+            try:
+
+                new_event = Event(category=catg, guest=gst, user_id=userid,
+                                  user=_user, desc=description, location=loc,
+                                  set_date=date)
+                session.add(new_event)
+                session.commit()
+                return (new_event)
+            except Exception as e:
+                session.rollback()
+                raise Exception(f"An Error occured: {e}")
+        else:
+            raise Exception("User not found")
 
 
     @classmethod
     def update_event(self, session: Session,
                      event_id: int,
-                     catg: str,
-                     guest: int,
+                     catg: str = None,
+                     guest: int = None,
                      loc: str = None,
                      date: datetime = None,
                      description: str = None) -> "Event":
         """Update an existing event."""
         # Fetch the event by ID
         event = session.query(Event).filter_by(id=event_id).one_or_none()
-        try:
-            if event:
+        if event:
+            try:
                 # Update the event's type if provided
                 if catg:
                     event.category = catg
@@ -85,12 +94,25 @@ class Event(Base):
                 session.commit()
 
                 return (event)
-            else:
-                raise Exception("Item not found")
+            except Exception as e:
+                session.rollback()
+                raise Exception(f"An error occurred: {e}")
+        else:
+            raise Exception("Item not found")
+
+    @classmethod
+    def get_events(cls, session):
+        """Get all event items"""
+        try:
+            event_items = session.query(cls).all()
         except Exception as e:
-            session.rollback()
-            raise Exception(f"An error occurre: {e}")
-    
+            raise Exception (f"An error occurred: {e}")
+        else:
+            dict_ev = [deepcopy(ev.__dict__) for ev in event_items]
+            for dic in dict_ev:
+                del(dic["_sa_instance_state"])
+            return (dict_ev)
+
     def generate_event_link(event):
         """Generate a unique event link for the event."""
         unique_id = uuid.uuid4().hex
