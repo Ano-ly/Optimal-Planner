@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"event_id": 2 ,"name": "Fortune", "phone_no": "345", "email": "f@gmail.com"}' "http://0.0.0.0:5000/api/v1/invite"
+curl -X POST -H "Content-Type: application/json" -d '{"event_id": 2 ,"name": "Clara", "phone_no": "3456", "email": "c@gmail.com"}' "http://0.0.0.0:5000/api/v1/invite"
+curl -X GET "http://0.0.0.0:5000/api/v1/invite/event/2"
+curl -X PUT -H "Content-Type: application/json" -d '{"ph_no": "Edited"}' "http://0.0.0.0:5000/api/v1/invite/1"
+curl -X PUT -H "Content-Type: application/json" -d '{"ph_no": "Edited"}' "http://0.0.0.0:5000/api/v1/invite/2"
+curl -X GET "http://0.0.0.0:5000/api/v1/invite/2"
+curl -X DELETE "http://0.0.0.0:5000/api/v1/invite/1"
+curl -X GET "http://0.0.0.0:5000/api/v1/invite/event/2"

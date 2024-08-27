@@ -24,9 +24,6 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
-    confirmed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    confirmed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-
 
     events: Mapped[List["Event"]] = relationship(back_populates="user")
 
@@ -43,7 +40,7 @@ class User(Base):
             session.add(new_user)
             session.commit()
             session.refresh(new_user)
-
+            """
             # Generate confirmation token
             s = URLSafeTimedSerializer(app_secret_key)
             token = s.dumps(new_user.email, salt=security_password_salt)
@@ -51,6 +48,7 @@ class User(Base):
             server = login_gmail(EMAIL_ID, EMAIL_PASSWORD)
             send_confirmation_email(server, new_user.email, token)
             logout_gmail(server)
+            """
 
         except Exception as e:
             session.rollback()

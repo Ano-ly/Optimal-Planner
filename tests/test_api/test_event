@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+curl -X POST -H "Content-Type: application/json" -d '{"catg": "Wedding", "gst": 5, "userid": 2}' "http://0.0.0.0:5000/api/v1/event"
+curl -X POST -H "Content-Type: application/json" -d '{"catg": "Naming", "gst": 7, "userid": 2}' "http://0.0.0.0:5000/api/v1/event"
+curl -X GET "http://0.0.0.0:5000/api/v1/event/user/2"
+curl -X PUT -H "Content-Type: application/json" -d '{"gst": 346}' "http://0.0.0.0:5000/api/v1/event/1"
+curl -X PUT -H "Content-Type: application/json" -d '{"catg": "Non-Wedding", "gst": 5}' "http://0.0.0.0:5000/api/v1/event/2"
+curl -X GET "http://0.0.0.0:5000/api/v1/event/2"
+curl -X DELETE "http://0.0.0.0:5000/api/v1/event/1"
+curl -X GET "http://0.0.0.0:5000/api/v1/event/user/2"
