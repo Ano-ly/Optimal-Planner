@@ -61,7 +61,7 @@ def create_task():
     nm = req.get("name")
     desc = req.get("desc")
     try:
-        new_task = Task.create_task(session, evnt_id, nm, desc)
+        new_task = Task.create_task(session, event_id, nm, desc)
     except Exception as e:
         abort(404, description=f"{e}")
     else:
