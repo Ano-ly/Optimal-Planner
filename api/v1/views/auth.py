@@ -15,17 +15,16 @@ def auth_user():
 
     Required request parameters: username, password
     """
-    if not request.get_json():
-        abort(400, description="Not a valid JSON")
-    req = request.get_json()
-    if "username" not in req and "email" not in req:
+    user = request.form
+    user_info = {}
+    for key, val in user.items():
+        user_info.update({key: val})
+    if "username" not in user_info:
         abort(400, description="Username not included")
-    if "password" not in req:
+    if "password" not in user_info:
         abort(400, description="Password not included")
-    pswd = req.get("password")
-    identify = req.get("username")
-    if identify is None:
-        identify = req.get("email")
+    pswd = user_info.get("password")
+    identify = user_info.get("username")
     user = authenticate_user(session, identify, pswd)
     if user is None:
         abort(403, description="Invalid user credentials")
