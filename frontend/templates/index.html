@@ -20,10 +20,11 @@
         <div>
 			<ul id="navbar">
                 <li><a class="active" href="index.html">Home</a></li>
-				<li><a href="events.html">Create Events</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+			    <li><button class="leadbutton" onclick=aboutPage()>About Us</button></li>
+			    <li><button class="leadbutton" onclick=contactPage()>Contact Us</button></li>
+                <li><a class="demo" href="demo.html">Request a demo</a></li>
                 <li><button class="loginbutton" onclick=loginPage()>Login</button></li>
-                <li><a class="demo" href="demo.html">Book a demo</a></li>
+                <li><a class="sign-up"  href="signup.html">Sign Up here</a></li>
                 <div class="search-container">
                     <input type="search" placeholder="Search events">
                     <span>&#128269;</span>
@@ -152,28 +153,18 @@
         </div>
     </section>
 
-    <section id="newsletter"  class="section-p1">
-		<div class="newstext">
-			<h4>Sign Up For Newsletters</h4>
-			<p>Get E-mail updates about our amazing platform<span>specially desinged for you.</span></p>
-		</div>
-		<div class="form">
-			<input type="text" placeholder="Your email address">
-			<button>Sign Up</button>
-		</div>
-	</section>
-
     <footer class="section-p1">
 		<div class="col">
-			<img class="logo" src="static/images/logo1.png" alt="">
-			<h4>Contact</h4>
-			<p><strong>Address: </strong> 7A Ikare Market, Street 22, Ondo State, Nigeria</p>
-			<p><strong>Phone:</strong> +234 816 4771 443 / +234 903 4640 312</p>
+			<h4>Use Optimal Planner</h4>
+			<a href="create.html">Create Event</a>
+			<a class="demo" href="demo.html">Request a demo</a>
+			<a href="contact.html">Contact Us</a>
+			<a href="#">Help</a>
 			<div class="follow">
 				<h4>Follow Us</h4>
 				<div class="icon">
 					<i class="fab fa-facebook-f"></i>
-					<i class="fab fa-xmark"></i>
+					<i class="fab fa-x mark"></i>
 					<i class="fab fa-instagram"></i>
 					<i class="fab fa-youtube"></i>
 				</div>
@@ -184,14 +175,6 @@
 			<button class="leadbutton" onclick=aboutPage()>About Us</button>
 			<a href="#">Privacy Policy</a>
 			<a href="#">Terms & Conditions</a>
-			<button class="leadbutton" onclick=contactPage()>Contact Us</button>
-		</div>
-
-		<div class="col">
-			<h4>My Account</h4>
-			<a href="#">Sign In</a>
-			<a href="#">Book a demo</a>
-			<a href="#">Help</a>
 		</div>
 
 		<div class="col install">
@@ -202,7 +185,7 @@
 				<img src="static/images/googleplay.png" alt="">
 			</div>
 			<p>Secured Payment Gateways </p>
-			<img src="static/images/paygate.png" alt="">
+			<img src="images/Paygate.png" alt="">
 		</div>
 		<div class="copyright">
 			<p>© 2024, Optimal planner</p>
