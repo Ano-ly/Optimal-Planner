@@ -16,6 +16,15 @@ def serve_login_page():
     """Serve page for user login"""
     return(render_template("login.html"))
 
+@op_web_app.route("/about", strict_slashes=False)
+def serve_about_page():
+    """Serve about page"""
+    return(render_template("about.html"))
+
+@op_web_app.route("/contact", strict_slashes=False)
+def serve_contact_page():
+    """Serve contact page"""
+    return(render_template("contact.html"))
 
 if __name__=="__main__":
-    op_web_app.run("0.0.0.0", port=5003)
+    op_web_app.run("0.0.0.0", port=5001)
