@@ -1,31 +1,21 @@
+window.userId = {};
 $(document).ready(function () {
-  $('loginuser').submit(function (event) {
+  $('#loginuser').submit(function (event) {
     event.preventDefault();
     const userLoginForm = new FormData(this);
-    let userId;
     $.ajax({
-      url: 'http://0.0.0.0:5000/api/v1/auth'
+      url: 'http://0.0.0.0:5000/api/v1/auth',
       method: 'POST',
       data: userLoginForm,
-      contentType: false,
       processData: false,
+      contentType: false,
       success: function (response) {
-        window.location.href = "/events"
-        userid = response
+        wondow.userId = response;
+        window.location.href ='/event';
       },
       error: function (xhr, err, errStr) {
-        $('formdiv').text(errStr);
+        console.log(errStr);
       }
     });
   });
-  $.ajax({
-    url: `http://0.0.0.0:5000/api/v1/event/user/{userId}`
-    method: 'GET',
-    dataType: 'json',
-    success: function (response) {
-      for (let event of response) {
-
-      }
-    }
-  })
 });
