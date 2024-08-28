@@ -6,6 +6,7 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship, Session
 from typing import List
+import uuid
 from models.base import Base
 from models.user import User
 
@@ -21,6 +22,7 @@ class Event(Base):
     desc: Mapped[str] = mapped_column(String, nullable=True)
     location: Mapped[str] = mapped_column(String, nullable=True)
     guest: Mapped[int] = mapped_column(Integer, nullable=False)
+    event_link: Mapped[str] = mapped_column(String(240), unique=True, nullable=True)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"),
         nullable=False, default=None)
@@ -110,3 +112,8 @@ class Event(Base):
             for dic in dict_ev:
                 del(dic["_sa_instance_state"])
             return (dict_ev)
+
+    def generate_event_link(event):
+        """Generate a unique event link for the event."""
+        unique_id = uuid.uuid4().hex
+        return f"https://optimalplanner.com/events/{unique_id}"
