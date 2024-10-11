@@ -64,7 +64,7 @@ body {
 	font-size: 18px;
 }
 
-#navbar button.sign-up {
+#navbar a.sign-up {
 	background-color: #ffbd27;
     border: 0;
 	margin-right: 20px;
@@ -508,123 +508,6 @@ button[type="submit"] {
   button[type="submit"]:hover {
 	background-color: #088178;
   }
-
-  /* Create Event */
-  .create-event-container {
-	width: 500px;
-	margin: 50px auto;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-	display: block;
-	margin-bottom: 10px;
-}
-
-input[type="text"], input[type="date"], input[type="time"] {
-	width: 100%;
-	height: 40px;
-	margin-bottom: 20px;
-	padding: 10px;
-	border: 1px solid #ccc;
-}
-
-textarea {
-	width: 100%;
-	height: 100px;
-	margin-bottom: 20px;
-	padding: 10px;
-	border: 1px solid #ccc;
-}
-
-input[type="submit"] {
-	width: 100%;
-	height: 40px;
-	background-color: #4CAF50;
-	color: #fff;
-	padding: 10px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-input[type="submit"]:hover {
-	background-color: #3e8e41;
-}
-
-  /* Sign Up Page */
-
-  #sign-up-form {
-	width: 450px;
-	margin: 10px auto;
-	margin-bottom: 20px;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  #sign-up-form input[type="text"],
-  #sign-up-form input[type="email"],
-  #sign-up-form input[type="password"] {
-	width: 100%;
-	height: 40px;
-	margin-bottom: 20px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-  }
-
-  #sign-up-form input[type="submit"] {
-	width: 100%;
-	height: 40px;
-	background-color: #4CAF50;
-	color: #fff;
-	padding: 10px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-  }
-
-  .eye-icon {
-	position: relative;
-	left: 370px;
-	bottom: -28px;
-	cursor: pointer;
-  }
-
-  .remember-me-container {
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
-  }
-
-  .remember-me-container input[type="checkbox"] {
-	margin-right: 5px;
-	margin-bottom: 10px;
-  }
-
-  .remember-me-container label {
-	font-size: 14px;
-	color: #000;
-  }
-
-  #sign-up-form label {
-	display: block;
-	margin-bottom: 10px;
-  }
-
-  #sign-up-form input[type="submit"]:hover {
-	background-color: #3e8e41;
-  }
 button.leadbutton {
-    background-color: white;
-    border-radius: 0px;
-}
-button.loginbutton {
-    background-color: white;
-    border-radius: 0px;
+    background-color: None;
 }

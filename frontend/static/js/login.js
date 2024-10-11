@@ -1,4 +1,3 @@
-window.userId = {};
 $(document).ready(function () {
   $('#loginuser').submit(function (event) {
     event.preventDefault();
@@ -7,14 +6,15 @@ $(document).ready(function () {
       url: 'http://0.0.0.0:5000/api/v1/auth',
       method: 'POST',
       data: userLoginForm,
+      dataType: 'json',
       processData: false,
       contentType: false,
       success: function (response) {
-        wondow.userId = response;
-        window.location.href ='/event';
+        $('#error').text(`Response: ${response}`);
+        window.location.href = "/";
       },
       error: function (xhr, err, errStr) {
-        console.log(errStr);
+        $('#error').text(errStr);
       }
     });
   });

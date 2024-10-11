@@ -7,3 +7,6 @@ function aboutPage () {
 function contactPage () {
   window.location.href = "/contact";
 }
+function signupPage () {
+  window.location.href = "/signup";
+}

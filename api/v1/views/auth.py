@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """Auth views"""
 
@@ -29,4 +28,5 @@ def auth_user():
     if user is None:
         abort(403, description="Invalid user credentials")
     else:
+        print(user.id)
         return(jsonify(user.id))

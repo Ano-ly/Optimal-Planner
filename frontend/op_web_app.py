@@ -31,5 +31,10 @@ def serve_event_page():
     """Serve event page"""
     return(render_template("events.html"))
 
+@op_web_app.route("/signup", strict_slashes=False)
+def serve_signup_page():
+    """Serve event page"""
+    return(render_template("signup.html"))
+
 if __name__=="__main__":
     op_web_app.run("0.0.0.0", port=5001)

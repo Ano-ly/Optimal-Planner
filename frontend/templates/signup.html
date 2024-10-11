@@ -8,30 +8,30 @@
 	<title>Optimal Planner</title>
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
-	<link rel="stylesheet" href="static/styles/styles1.css">
+	<link rel="stylesheet" href="static/styles/styles.css">
 </head>
 <body>
-
 	<section id="header">
 		<a href="#"><img src="static/images/logo1.png" class="logo" alt=""></a>
+        <form id="sign-up-form">
+            <input type="text" placeholder="Email" required>
+            <span class="eye-icon" onclick="togglePassword()">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </span>
+            <input type="password" placeholder="Password" required>
+            <span class="eye-icon" onclick="togglePassword()">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </span>
+            <input type="password" placeholder="Confirm Password" required>
+            <span class="remember-me-container">
+                <input type="checkbox" id="remember-me" name="remember-me"><label for="remember-me">I agree to the Terms of Service and Privacy Policy.</label>
+                </span>
 
-        <div>
-			<ul id="navbar">
-                <li><a class="active" href="index.html">Home</a></li>
-				<li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a class="demo" href="demo.html">Request a demo</a></li>
-                <div class="search-container">
-                    <input type="search" placeholder="Search events">
-                    <span>&#128269;</span>
-                </div>
-
-			</ul>
-		</div>
+            <button type="submit">Sign Up</button>
+        </form>
     </section>
 
-	<footer class="section-p1">
+    <footer class="section-p1">
 		<div class="col">
 			<h4>Use Optimal Planner</h4>
 			<a href="create.html">Create Event</a>
@@ -50,7 +50,7 @@
 		</div>
 		<div class="col">
 			<h4>About</h4>
-			<a href="#">About Us</a>
+			<button class="leadbutton" onclick=aboutPage()>About Us</button>
 			<a href="#">Privacy Policy</a>
 			<a href="#">Terms & Conditions</a>
 		</div>
@@ -63,10 +63,11 @@
 				<img src="static/images/googleplay.png" alt="">
 			</div>
 			<p>Secured Payment Gateways </p>
-			<img src="static/images/Paygate.png" alt="">
+			<img src="static/images/paygate.png" alt="">
 		</div>
 		<div class="copyright">
 			<p>© 2024, Optimal planner</p>
 		</div>
 	</footer>
+</body>
 </body>
